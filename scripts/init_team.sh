@@ -3,6 +3,8 @@
 ROBONEWBIE_DIR=../RoboNewbie_1.0
 ROBONEWBIE_JAR=$ROBONEWBIE_DIR/dist/RoboNewbie_1.0.jar
 
+cd ROBONEWBIE_DIR
+
 for i in {1..5}
 do
 	posx=$((-$i))

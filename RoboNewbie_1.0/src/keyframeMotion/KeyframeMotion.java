@@ -91,6 +91,8 @@ public class KeyframeMotion {
   private static KeyframeSequence TURN_HEAD_LEFT_SEQUENCE;
   private static KeyframeSequence TURN_HEAD_RIGHT_SEQUENCE;
   private static KeyframeSequence TURN_HEAD_DOWN_SEQUENCE;
+  private static KeyframeSequence TURN_HEAD_UP_SEQUENCE;
+  
   private static KeyframeSequence WAVE_SEQUENCE;
   private Keyframe actualKeyframe = null;           // Mit diesen drei Variablen
   private int leftCyclesForActualFrame = 0;         // könnte man state
@@ -136,6 +138,7 @@ public class KeyframeMotion {
     TURN_HEAD_LEFT_SEQUENCE = keyframeReader.getSequenceFromFile("turn-head-left.txt");
     TURN_HEAD_RIGHT_SEQUENCE = keyframeReader.getSequenceFromFile("turn-head-right.txt");
     TURN_HEAD_DOWN_SEQUENCE = keyframeReader.getSequenceFromFile("turn-head-down.txt");
+    TURN_HEAD_UP_SEQUENCE = keyframeReader.getSequenceFromFile("turn-head-up.txt");
     WAVE_SEQUENCE = keyframeReader.getSequenceFromFile("wave_nika.txt");
   }
 
@@ -159,6 +162,17 @@ public class KeyframeMotion {
   public void setTurnHeadDown() {
     if (loggingOn) log.log("motion turn head down \n");
     actualSequence = TURN_HEAD_DOWN_SEQUENCE;
+    state = MotionState.BETWEEN_FRAMES;
+  }
+  
+   /**
+   * Set move to turn the robots head down.
+   * 
+   * Assumed posture before this move: could be any.
+   */
+  public void setTurnHeadUp() {
+    if (loggingOn) log.log("motion turn head up \n");
+    actualSequence = TURN_HEAD_UP_SEQUENCE;
     state = MotionState.BETWEEN_FRAMES;
   }
 

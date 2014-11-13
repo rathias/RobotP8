@@ -5,7 +5,7 @@
 * @version 1.0
 *******************************************************************************/
 
-package examples.agentSimpleWalkToBall;
+package gaming;
 
 import agentIO.EffectorOutput;
 import agentIO.PerceptorInput;
@@ -14,30 +14,18 @@ import keyframeMotion.KeyframeMotion;
 import localFieldView.LocalFieldView;
 import util.Logger;
 
-
-
 /**
  * This agent shows the structure of an agent, that does something sensible:
  * it walks into the direction of the ball.
  */
 public class Agent_SimpleWalkToBall {
-
-  public static void main(String args[]) {
-    
-    Agent_SimpleWalkToBall agent = new Agent_SimpleWalkToBall();
-    
-    agent.init();
-    agent.run();
-    agent.log.printLog();
-    System.out.println("Agent stopped.");
-  }
-  
-  private Logger log;
+ 
+  public Logger log;
   private PerceptorInput percIn;
   private EffectorOutput effOut;
   private KeyframeMotion kfMotion;
   private LocalFieldView localView;
-  private SimpleThinking simpleThinking;
+  protected SimpleThinking simpleThinking;
   
   /** A player is identified in the server by its player ID and its team name. 
    There are at most two teams an the field, and every agent of a single team 
@@ -64,7 +52,7 @@ public class Agent_SimpleWalkToBall {
    * their relations to each other, and create the robot at a specified position 
    * on the field. 
    */
-  public void init() {
+  public void init(String _id, String _team, double _beamX, double _beamY, double _beamRot) {
 
     log = new Logger();
 
@@ -77,7 +65,7 @@ public class Agent_SimpleWalkToBall {
     
     simpleThinking = new SimpleThinking(localView, kfMotion);
 
-    sc.initRobot(id, team, beamX, beamY, beamRot);
+    sc.initRobot(_id, _team, _beamX, _beamY, _beamRot);
     
   }
   

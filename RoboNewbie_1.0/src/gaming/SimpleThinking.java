@@ -5,7 +5,7 @@
 * @version 1.0
 *******************************************************************************/
 
-package examples.agentSimpleWalkToBall;
+package gaming;
 
 import keyframeMotion.KeyframeMotion;
 import localFieldView.BallModel;
@@ -34,10 +34,10 @@ public class SimpleThinking {
 
   private static final double TOLERANCE_ANGLE = Math.toRadians(30);
   
-  private KeyframeMotion motion;
-  private BallModel ball;
+  protected KeyframeMotion motion;
+  protected BallModel ball;
   
-  private boolean robotIsWalking = false;
+  protected boolean robotIsWalking = false;
 
   /**
    * Constructor. 
@@ -58,6 +58,8 @@ public class SimpleThinking {
    */
   public void decide() {
     
+      boolean headdown = false;
+         
     // Take care not to interrupt an actually executed movement.
     // This has to be checked always when using class KeyframeMotion. 
     if (motion.ready()) {
@@ -67,15 +69,29 @@ public class SimpleThinking {
           && (Math.abs(ball.getCoords().getAlpha())) < TOLERANCE_ANGLE) {
         motion.setWalkForward();
         robotIsWalking = true;
-      }
-
+      }    
+      
       // If the ball lies somewhere else, first stop the walking to
       // prepare for the turning, and then turn left.  
-      else if (robotIsWalking) {
+      else if (robotIsWalking) 
+      {
         motion.setStopWalking();
         robotIsWalking = false;
-      } else {
-        motion.setTurnLeft();
+      } 
+      else {
+          
+          if(headdown == false)
+          {
+            motion.setTurnHeadDown();
+            headdown = true;
+            headdown = false;
+          }
+          else
+          {
+            motion.setTurnHeadDown();   
+            headdown = false;
+            headdown = true;
+          }
       }
     }
     
