@@ -7,6 +7,7 @@
 
 package gaming;
 
+import agentIO.PerceptorInput;
 import keyframeMotion.KeyframeMotion;
 import localFieldView.BallModel;
 import localFieldView.LocalFieldView;
@@ -36,7 +37,14 @@ public class SimpleThinking {
   
   protected KeyframeMotion motion;
   protected BallModel ball;
-  
+  private PerceptorInput percIn;
+
+  // 0 = perform motion according to keyframe file test.txt
+  // 1 = wait for wait_time cycles: is pose stable?
+  // 2 = stand up from back
+  // 3 = stand up from front
+  protected int state = 0;
+
   protected boolean robotIsWalking = false;
 
   /**
@@ -45,9 +53,10 @@ public class SimpleThinking {
    * @param localView Has to be already initialized. 
    * @param motion Has to be already initialized. 
    */
-  public SimpleThinking(LocalFieldView localView, KeyframeMotion motion) {
+  public SimpleThinking(LocalFieldView localView, KeyframeMotion motion, PerceptorInput percIn) {
     this.ball = localView.getBall();
     this.motion = motion;
+    this.percIn = percIn;
   }
     
   /**
@@ -63,38 +72,58 @@ public class SimpleThinking {
     // Take care not to interrupt an actually executed movement.
     // This has to be checked always when using class KeyframeMotion. 
     if (motion.ready()) {
-
-      // If the ball lies in front of the robot, walk towards it. 
-      if (ball.isInFOVnow()
-          && (Math.abs(ball.getCoords().getAlpha())) < TOLERANCE_ANGLE) {
-        motion.setWalkForward();
-        robotIsWalking = true;
-      }    
+      if (percIn.getAcc().getZ() < 7) {
+        if (percIn.getAcc().getY() > 0) {
+          state = 2;    // robot lies on the back
+        } else {
+          state = 3;                               // robot lies on the front
+        }
+      }
+      switch (state) {
+        case 0:
+            // If the ball lies in front of the robot, walk towards it. 
+            if (ball.isInFOVnow()
+                && (Math.abs(ball.getCoords().getAlpha())) < TOLERANCE_ANGLE) {
+              motion.setWalkForward();
+              robotIsWalking = true;
+            }
       
-      // If the ball lies somewhere else, first stop the walking to
-      // prepare for the turning, and then turn left.  
-      else if (robotIsWalking) 
-      {
-        motion.setStopWalking();
-        robotIsWalking = false;
-      } 
-      else {
-          
-          if(headdown == false)
-          {
-            motion.setTurnHeadDown();
-            headdown = true;
-            headdown = false;
-          }
-          else
-          {
-            motion.setTurnHeadDown();   
-            headdown = false;
-            headdown = true;
-          }
+            // If the ball lies somewhere else, first stop the walking to
+            // prepare for the turning, and then turn left.  
+            else if (robotIsWalking) 
+            {
+              motion.setStopWalking();
+              robotIsWalking = false;
+            }
+            else {
+
+                if(headdown == false)
+                {
+                  motion.setTurnHeadDown();
+                  headdown = true;
+                  headdown = false;
+                }
+                else
+                {
+                  motion.setTurnHeadDown();   
+                  headdown = false;
+                  headdown = true;
+                }
+            }
+          state = 0;
+          break;
+        case 1:
+          break;
+        case 2:
+          motion.setStandUpFromBack();
+          state = 0;
+          break;
+        case 3:
+          motion.setRollOverToBack();
+          state = 0;    
+          break;
       }
     }
-    
   }
   
 }

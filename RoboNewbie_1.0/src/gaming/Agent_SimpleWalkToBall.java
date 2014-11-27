@@ -63,7 +63,7 @@ public class Agent_SimpleWalkToBall {
     kfMotion = new KeyframeMotion(effOut, percIn, log);
     localView = new LocalFieldView(percIn, log, team, id);
     
-    simpleThinking = new SimpleThinking(localView, kfMotion);
+    simpleThinking = new SimpleThinking(localView, kfMotion, percIn);
 
     sc.initRobot(_id, _team, _beamX, _beamY, _beamRot);
     
