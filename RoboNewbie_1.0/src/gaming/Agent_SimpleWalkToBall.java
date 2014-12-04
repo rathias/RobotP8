@@ -24,7 +24,7 @@ public class Agent_SimpleWalkToBall {
   private PerceptorInput percIn;
   private EffectorOutput effOut;
   private KeyframeMotion kfMotion;
-  private LocalFieldView localView;
+  protected LocalFieldView localView;
   protected SimpleThinking simpleThinking;
   
   /** A player is identified in the server by its player ID and its team name. 
@@ -75,13 +75,13 @@ public class Agent_SimpleWalkToBall {
    */
   public void run(){
     
-    int agentRunTimeInSeconds = 120;
+    int agentRunTimeInSeconds = 300;
     // The server cycle represents 20ms, so the agent has to execute 50 cycles 
     // to run 1s. 
     int totalServerCycles = agentRunTimeInSeconds * 50;
     
     // This loop synchronizes the agent with the server.
-    for (int i = 0; i < totalServerCycles; i++) {
+    for (; ;) {
        
       sense();     
       

@@ -15,9 +15,9 @@ public class AgentAttaquant extends Agent_SimpleWalkToBall {
 
     String _team = "Testteam";
     String _id = "test";
-      double _beamX = 0;
+      double _beamX = -1;
       double _beamY = 0;
-      double _beamRot = -90;
+      double _beamRot = 0;
 
       if(args.length > 0)
       {
@@ -26,15 +26,6 @@ public class AgentAttaquant extends Agent_SimpleWalkToBall {
          _beamX = Double.parseDouble(args[2]);
          _beamY = Double.parseDouble(args[3]);
          _beamRot = -90;
-      }
-
-      if(args.length > 0)
-      {
-         _team = args[0];
-        _id = args[1];
-        _beamX = Double.parseDouble(args[2]);
-        _beamY = Double.parseDouble(args[3]);
-        _beamRot = -90;
       }
       
     Agent_SimpleWalkToBall agent = new Agent_SimpleWalkToBall();

@@ -3,6 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/rathias/dev/paris8/robocup/RobotP8_2/RoboNewbie_1.0/src/gaming/Agent_SimpleWalkToBall.java</file>
+            <file>file:/home/rathias/dev/paris8/robocup/RobotP8_2/RoboNewbie_1.0/src/localFieldView/LocalFieldView.java</file>
+            <file>file:/home/rathias/dev/paris8/robocup/RobotP8_2/RoboNewbie_1.0/src/gaming/SimpleThinking.java</file>
+        </group>
     </open-files>
 </project-private>
